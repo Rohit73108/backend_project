@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { loginUser, logoutUSer, registerUser } from "../controllers/user.controler.js";
+import { loginUser, logoutUSer, registerUser, refreshAccessToken } from "../controllers/user.controler.js";
 import {upload} from "../middlewares/multer.middleware.js"
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 
@@ -7,7 +7,7 @@ import { verifyJWT } from "../middlewares/auth.middleware.js";
 
 const router= Router();
 
-router.route('/register').post(
+router.route("/register").post(
     upload.fields([
         {
             name:"avatar",
@@ -21,10 +21,12 @@ router.route('/register').post(
        registerUser
     )
 
-router.route('/login').post(loginUser);
+router.route("/login").post(loginUser);
 // secured routes
 
-router.route('/logout').post( verifyJWT ,logoutUSer);
+router.route("/logout").post( verifyJWT ,logoutUSer);
+router.route("/refresh-token").post(refreshAccessToken);
+
 
 
 
